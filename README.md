@@ -46,7 +46,7 @@ Testing:
 
 Run the program:
 
-`GetNumberSpanishLicensePlate_FindContours_OCRScratch.py
+GetNumberSpanishLicensePlate_FindContours_OCRScratch.py
 
 The output displays the recognized license plates and the filters that successfully identified them. The image filenames correspond to the license plate numbers, allowing for verification.
 
