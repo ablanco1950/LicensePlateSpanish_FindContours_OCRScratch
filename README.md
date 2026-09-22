@@ -4,7 +4,43 @@ A project that detects Spanish car license plate numbers using YOLO for plate re
 
 Installation:
 
-Download and extract the project to your local drive.
+Download and extract the project and folders to your local drive.
+
+A requirements.txt file is attached
+
+if not instaled, the following modules are needed:
+
+pip install opencv-python
+
+pip install packaging
+
+pip install pillow
+
+pip install pyparsing
+
+pip install cycler
+
+pip install python-dateutil
+
+pip install kiwisolver
+
+pip install importlib-resources
+
+pip install keras
+
+pip install tensorflow
+
+pip install ultralytics
+
+pip install imutils
+
+pip install scipy
+
+pip install scikit-image
+
+pip install Ipython
+
+pip install pytz
 
 Testing:
 
