@@ -1,104 +1,45 @@
-OCR from scratch using Kaggle dataset dwonloaded from https://www.kaggle.com/code/preatcher/ocr-training  applied to the case of Spanish car license plates or any other with format NNNNAAA. The hit rate is lower than that achieved by pytesseract: in a test with 21 images, 16 hits are reached while with pytesseract the hits are 17 https://github.com/ablanco1950/LicensePlate_Labeled_MaxFilters.
+LicensePlateSpanish_FindContours_OCRScratch
 
-Requirements:
+A project that detects Spanish car license plate numbers using YOLO for plate recognition, `cv2.findContours` for character prediction, and a basic OCR implementation built from scratch, all while utilizing minimal filtering and preprocessing.
 
-have the packages installed that allow:
+Installation:
 
-import numpy
+Download and extract the project to your local drive.
 
-import tensorflow
+Testing:
 
-from tensorflow.keras.models import Sequential
+Run the program:
 
-from tensorflow.keras.layers import Conv2D
+`GetNumberSpanishLicensePlate_FindContours_OCRScratch`
 
-from tensorflow.keras.layers import MaxPooling2D
+The output displays the recognized license plates and the filters that successfully identified them. The image filenames correspond to the license plate numbers, allowing for verification.
 
-from tensorflow.keras.layers import Flatten
+The final result shows 16 successful detections out of 21 processed images.
 
-from tensorflow.keras.layers import Dense, Dropout
+Processing time per image is approximately 1 second.
 
-import cv2
+By changing the folder path on line 15 of the program, you can test any folder; however, the images must be of Spanish license plates and named to match the plate number.
 
-import random
+Line 9 contains the parameter `SwOptionPlot="N"`; changing this to "Y" allows you to visualize the character contouring process before the characters are sent to the OCR. The car license plate recognition model, `best.pt`, was developed as part of this project: https://github.com/ablanco1950/LicensePlate_Yolov8_Filters_PaddleOCR
 
-Download from https://www.kaggle.com/datasets/preatcher/standard-ocr-dataset the archive.zip file, unzip it.
+The OCR model (`OCR11Hits.weights.h5`) was trained using the `TrainOCR.py` script from this project: https://github.com/pragatiunna/License-Plate-Number-Detection/tree/main
 
-In the download directory you should find the downloaded test6Training.zip (roboflow.com) and must unzip folder: test6Training with all its subfolders, containing the images for the test and its labels. This directory must be in the same directory where is the program GetNumberSpanishLicensePlate_OCRKaggle_labels_MaxFilters.py ( unziping may create two directories with name test6Training and the images may not be founded when executing it, it would be necessary copy of inner directory test6Training in the same directory where is  the mentioned  program GetNumberSpanishLicensePlate_OCRKaggle_labels_MaxFilters.py)
+Modifications were made to the script, as was the case with `OCRScratch_V1.py`.
 
-Operative:
+The training dataset was obtained from https://data.mendeley.com/datasets/nx9xbs4rgx/2; it also appears as `data.zip` in the aforementioned project.
 
-Execute the program:
-
-OCRKaggle.py
-
-that creates the model ModelOCRKaggle25Epoch.h5 
-
-It requires that the file directory, with the kaggle characters used to train the model be in C:, although its location can be changed by altering line 30
- of OCRKaggle.py.
-
-this model  is created in the archive/data directory and must be passed to the program's execution directory, the directory where is GetNumberSpanishLicensePlate_OCRKaggle_labels_MaxFilters.py
-
-Execute:
-
-GetNumberSpanishLicensePlate_OCRKaggle_labels_MaxFilters.py
-
-That uses the model ModelOCRKaggle25Epoch.h5  create in the step before
-
-Each car license plate appears on the screen with the text that could have been recognized from the image and the final result assigning the car license plate that has been recognized the most times.
-
-As output, the LicenseResults.txt file is also obtained with the relation between true license plate and predicted license plate.
-
-Observations:
-
-
-The OCRKaggle.py program, which is a copy of the one found at https://www.kaggle.com/code/preatcher/ocr-training, 
-
-with the following changes:
-
-    The number of filters is reduced to 8 from 32
-    
-    the kernel is increased to (5,5) from (3,3)
-    
-    the Dense with activation relu is increased to 250 from 100
-    
-    the kernel_initializer of last dense with activation softmax is set to
-    initializer instead of he_uniform
-
-    To avoid that the values obtained in the CNN model vary from one execution to another of OCRKaggle.py, 
-    the weights have to be initialized to a fixed value by the added instruction
-    ( https://stackoverflow.com/questions/71404206/python-cnn-why-i-get-different-results-in-different-desktopwhat-can-i-do-to-get)
-    # Seed value
-    # Apparently you may use different seed values at each stage
-    seed_value= 0
-
-    random.seed(seed_value)
-
-    np.random.seed(seed_value)
-
-    # Set the `tensorflow` pseudo-random generator at a fixed value
- 
-    tf.random.set_seed(seed_value)
-   
-    (https://stackoverflow.com/questions/46407457/error-in-creating-custom-initializer-using-get-variable-with-keras)
-    initializer =tf.keras.initializers.glorot_normal()
+Training was repeated several times; given the speed of the process, it can be run frequently on a personal computer until an optimal model is found—though this implies a degree of overfitting.
 
 References:
 
-https://www.kaggle.com/code/preatcher/ocr-training
+https://github.com/pragatiunna/License-Plate-Number-Detection/tree/main
 
-https://www.kaggle.com/datasets/preatcher/standard-ocr-dataset
+https://data.mendeley.com/datasets/nx9xbs4rgx/2
 
-https://www.roboflow.com
+https://github.com/ablanco1950/LicensePlate_Yolov8_Filters_PaddleOCR
 
-https://www.geeksforgeeks.org/weight-initialization-techniques-for-deep-neural-networks/
-   
-https://github.com/ablanco1950/LicensePlate_Labeled_MaxFilters
+https://gist.github.com/endolith/255291#file-parabolic-py
 
-https://github.com/ablanco1950/OCRFromScratch_Chars74K_SpanishLicensePlate
+https://medium.com/@garciafelipe03/image-filters-and-morphological-operations-using-python-89c5bbb8dca0
 
-https://stackoverflow.com/questions/71404206/python-cnn-why-i-get-different-results-in-different-desktopwhat-can-i-do-to-get
-
-https://stackoverflow.com/questions/46407457/error-in-creating-custom-initializer-using-get-variable-with-keras
-
-https://keras.io/api/layers/initializers/
+https://blog.katastros.com/a?ID=01800-4bf623a1-3917-4d54-9b6a-775331ebaf05
